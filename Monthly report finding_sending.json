@@ -1,0 +1,421 @@
+{
+  "name": "Monthly report finding/sending",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        272
+      ],
+      "id": "e63ab8fe-f5de-4317-a7dd-f78ee645a631",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -496,
+        272
+      ],
+      "id": "c5522c4f-cd52-40d4-a1e4-a861629ee54d",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "content": "Monthly reports sending",
+        "height": 464,
+        "width": 1680
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        144
+      ],
+      "id": "4a0e144e-95ee-4689-b38a-b59a75e489e9",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1rJTCiN9GcJkeG7FN4hUHz_5cPMSqP14Ppm61LoTO4K4",
+          "mode": "list",
+          "cachedResultName": "Customer data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rJTCiN9GcJkeG7FN4hUHz_5cPMSqP14Ppm61LoTO4K4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rJTCiN9GcJkeG7FN4hUHz_5cPMSqP14Ppm61LoTO4K4/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -736,
+        272
+      ],
+      "id": "3d390dae-4dde-4b4b-aa1c-e668e3c985c4",
+      "name": "Client information",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "LZHDqeoO48Rqk2Sl",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Loop Over Items').item.json.email }}",
+        "subject": "=Monthly Report of  {{ $('Loop Over Items').item.json.Company }}",
+        "emailType": "text",
+        "message": "=Hi {{ $('Loop Over Items').item.json.Name }},\nHope you are doing well. I am writing this email for the test purpose. You can access your monthly report at the given attachment. Thanks\n\n\n\nRegards,\nSystematic It Solutions",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        96,
+        368
+      ],
+      "id": "4f4a0316-9b44-45c8-a747-ad264f7b89b3",
+      "name": "Send Monthly Report",
+      "webhookId": "689c0ce5-a893-41be-8d3f-8af734aa16c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m1VPcMprMDT7czPO",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1rJTCiN9GcJkeG7FN4hUHz_5cPMSqP14Ppm61LoTO4K4",
+          "mode": "list",
+          "cachedResultName": "Customer data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rJTCiN9GcJkeG7FN4hUHz_5cPMSqP14Ppm61LoTO4K4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rJTCiN9GcJkeG7FN4hUHz_5cPMSqP14Ppm61LoTO4K4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Loop Over Items').item.json.Name }}",
+            "Email sent": "Sent"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PhoneNumber",
+              "displayName": "PhoneNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email sent",
+              "displayName": "Email sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "invoice",
+              "displayName": "invoice",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        320,
+        368
+      ],
+      "id": "d0b70312-f6eb-41c4-abbf-7b2c10870949",
+      "name": "Update report row",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "LZHDqeoO48Rqk2Sl",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        176
+      ],
+      "id": "a0df0224-cfbe-4cc7-8e3a-412f13af9251",
+      "name": "Nothing"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        496,
+        368
+      ],
+      "id": "29a62e20-b0b8-4134-8bcc-39c28af043f3",
+      "name": "Wait",
+      "webhookId": "ca66db01-63a0-452f-876b-ae72a48d347e"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -128,
+        368
+      ],
+      "id": "2e22b9d4-4673-47f2-b4cc-ccb786a7b047",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "b7lGZmZDLLOLfqlI",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{$json.Name}}_report",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -336,
+        368
+      ],
+      "id": "94787a64-fa53-499d-bbaa-7104358d9c7d",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "b7lGZmZDLLOLfqlI",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Workflow purpose\n\n\nIn this workflow n8n will take the google sheet and using Loop node it will send the monthly reports of the company to the email of the company automatically also it will update in google sheet that email is sent or not.\n\nThis workflow finds the file/folder of reports from google drive, download the report of the clients one by one and will send the customize email to their email address that will be given in google sheet",
+        "height": 448,
+        "width": 320,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1504,
+        160
+      ],
+      "id": "65ff032b-c3a7-4498-b93b-c0ee5fbdf498",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Client information",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Client information": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Monthly Report": {
+      "main": [
+        [
+          {
+            "node": "Update report row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update report row": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Send Monthly Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0a7ebe02-afe5-4166-8b03-0853c78121e5",
+  "meta": {
+    "instanceId": "d3f2ecae3412e9a08bbf5a59e7c354fcfbfa9c4cac52a37abdc7b87509678390"
+  },
+  "id": "Bhm9rVVtg3FTEEwg",
+  "tags": []
+}
